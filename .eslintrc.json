@@ -1,0 +1,17 @@
+{
+    "root": true,
+    "env": {
+        "browser": true,
+        "es6": true,
+        "webextensions": true
+    },
+    "parserOptions": {
+        "ecmaVersion": 8,
+        "sourceType": "module"
+    },
+    "extends": ["eslint:recommended"],
+    "rules": {
+        "no-console": "off",
+        "no-unused-vars": "off"
+    }
+}
