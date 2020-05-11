@@ -8,6 +8,9 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     if (tab.url.startsWith('chrome://') || tab.url.startsWith('chrome-extension://')) {
         return
     }
+    if (tab.url.startsWith('file://')) {
+        return
+    }
 
     if (changeInfo.status == 'loading') {
         chrome.tabs.executeScript(

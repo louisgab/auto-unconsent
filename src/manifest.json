@@ -7,5 +7,10 @@
         "scripts": ["js/background.js"],
         "persistent": false
     },
-    "permissions": ["http://*/*", "https://*/*", "tabs"]
+    "permissions": ["http://*/*", "https://*/*", "tabs"],
+    "icons": {
+        "16": "img/icon16.png",
+        "32": "img/icon32.png",
+        "48": "img/icon48.png"
+    }
 }
