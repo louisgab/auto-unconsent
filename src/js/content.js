@@ -22,28 +22,34 @@
 
     function searchProvider(node) {
         if (node.id == 'CybotCookiebotDialog') {
-            handler(unconsentCookiebot)
+            handler('Cookiebot', unconsentCookiebot)
             return true
         }
         if (node.classList && node.classList.contains('qc-cmp-ui-container')) {
-            handler(unconsentQuantcast)
+            handler('Quantcast', unconsentQuantcast)
             return true
         }
         return false
     }
 
     function unconsentCookiebot() {
-        console.log('Detector found Cookiebot')
-        chrome.runtime.sendMessage({ found: 'CookieBot' })
-        document.querySelector('#CybotCookiebotDialogBodyLevelButtonPreferences').click()
-        document.querySelector('#CybotCookiebotDialogBodyLevelButtonStatistics').click()
-        document.querySelector('#CybotCookiebotDialogBodyLevelButtonMarketing').click()
-        document.querySelector('#CybotCookiebotDialogBodyLevelButtonAccept').click()
+        const declineAllButton = document.querySelector('#CybotCookiebotDialogBodyLevelButtonLevelOptinDeclineAllButton')
+        if (declineAllButton) {
+            declineAllButton.click()
+            return
+        }
+
+        const prefsCheckbox = document.querySelector('#CybotCookiebotDialogBodyLevelButtonPreferences')
+        const statsCheckbox = document.querySelector('#CybotCookiebotDialogBodyLevelButtonStatistics')
+        const marketingCheckbox = document.querySelector('#CybotCookiebotDialogBodyLevelButtonMarketing')
+        const saveButton = document.querySelector('#CybotCookiebotDialogBodyLevelButtonLevelOptinAllowallSelection') || document.querySelector('#CybotCookiebotDialogBodyLevelButtonAccept')
+        prefsCheckbox.checked = false
+        statsCheckbox.checked = false
+        marketingCheckbox.checked = false
+        saveButton.click()
     }
 
     function unconsentQuantcast() {
-        console.log('Detector found Quantcast')
-        chrome.runtime.sendMessage({ found: 'QuantCast' })
         document.querySelector('#qc-cmp-purpose-button').click()
         const rejectAllButton = document.querySelector('#qcCmpUi > div > div.qc-cmp-purposes-header > div > button.qc-cmp-button.qc-cmp-button-small.qc-cmp-secondary-button') || document.querySelector('#qcCmpUi > div.qc-cmp-nav-bar.qc-cmp-top > div.qc-cmp-nav-bar-buttons-container > button.qc-cmp-button.qc-cmp-secondary-button.qc-cmp-enable-button')
         rejectAllButton.click()
@@ -51,10 +57,13 @@
         saveButton.click()
     }
 
-    function handler(callback) {
+    function handler(name, callback) {
+        console.log('Detector found ' + name)
+        chrome.runtime.sendMessage({ found: name })
         try {
             callback()
             chrome.runtime.sendMessage({ success: 'true' })
+            console.log('Detector unconsented ' + name + ' successfully')
         } catch (error) {
             chrome.runtime.sendMessage({ success: 'false' })
             console.log('Detector failed to autounconsent')
