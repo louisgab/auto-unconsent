@@ -1,6 +1,6 @@
 # Auto Unconsent
 
-> Chrome extension that unconsent common cookie consent popups
+Chrome extension that unconsent common cookie consent popups
 
 ## Why
 
@@ -10,14 +10,21 @@ Cognitive load should not constitute an explicit consent, isn't it?
 
 This is a first draft, but a good beginning I think
 
-(Currently under review on chrome web store)
+## Usage
+
+1. Download [last project build](https://github.com/louisgab/auto-unconsent/releases/latest/)
+2. Unpack
+3. Go to Chrome > More tools > Extensions
+4. Load unpacked > Select your the dist folder
+5. Boom it works, nothing to configure
 
 ## Scope
 
-For the moment, only those providers are handled:
+At the moment, only those providers are handled:
 
 -   Cookiebot
 -   Quantcast
+-   Didomi
 
 ## Contributing
 
